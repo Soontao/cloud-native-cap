@@ -1,0 +1,29 @@
+{
+  "name": "cloud-native-cap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^5",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^4.3.1",
+    "sqlite3": "^5.0.2",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5",
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2"
+  },
+  "scripts": {
+    "start": "cds run"
+  },
+  "cds": {}
+  
+}
