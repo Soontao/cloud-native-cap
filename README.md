@@ -15,6 +15,7 @@ docker push quay.io/cloud-native-public/cloud-native-cap-db
 
 ## prepare secrets
 
+* configure the HANA instance to accept external connection from BTP Kyma Runtime
 * create `hdi-container` in SAP BTP CF Runtime
 * create secret key & convert them fields to base64, and fill the values to `deployment-config-dev.yml`
 
