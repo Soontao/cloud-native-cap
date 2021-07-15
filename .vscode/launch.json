@@ -2,11 +2,24 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "cds-ts run --with-mocks --in-memory?",
       "name": "cds run",
+      "program": "${workspaceFolder}/node_modules/.bin/ts-node",
       "request": "launch",
-      "type": "node-terminal",
-      "skipFiles": [ "<node_internals>/**" ]
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register/transpile-only"
+      ],
+      "args": [
+        "${workspaceFolder}/node_modules/.bin/cds-ts",
+        "run",
+        "--with-mocks",
+        "--in-memory?"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "pwa-node"
     }
   ]
 }

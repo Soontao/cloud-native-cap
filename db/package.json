@@ -1,0 +1,10 @@
+{
+  "name": "deploy",
+  "dependencies": {
+    "@sap/hdi-deploy": "^4.1.0",
+    "@sap/xsenv": "^3.1.1"
+  },
+  "scripts": {
+    "start": "node deploy.js --verbose"
+  }
+}

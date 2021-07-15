@@ -1,0 +1,123 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cloud-native-cap-hdi-container-deploy-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: cloud-native-cap-hdi-container-v
+          image: quay.io/cloud-native-public/cloud-native-cap-db:latest
+          imagePullPolicy: Always
+          env:
+            - name: DEBUG
+              value: "*"
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "500Mi"
+          volumeMounts:
+            - name: cloud-native-cap-hdi-container-v
+              mountPath: "/etc/secrets/sapcp/hana/hdi-container"
+              readOnly: true
+      volumes:
+        - name: cloud-native-cap-hdi-container-v
+          secret:
+            secretName: cloud-native-cap-hdi-container
+      restartPolicy: Never
+  backoffLimit: 4
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    com.sap.k8s.app: cloud-native-cap-srv
+  name: cloud-native-cap-srv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      com.sap.k8s.app: cloud-native-cap-srv
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        com.sap.k8s.app: cloud-native-cap-srv
+    spec:
+      containers:
+        - image: quay.io/cloud-native-public/cloud-native-cap-srv:latest
+          imagePullPolicy: Always
+          name: cloud-native-cap-srv
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: "500Mi"
+          volumeMounts:
+            - name: cloud-native-cap-hdi-container-v
+              mountPath: "/etc/secrets/sapcp/hana/hdi-container"
+              readOnly: true
+      volumes:
+        - name: cloud-native-cap-hdi-container-v
+          secret:
+            secretName: cloud-native-cap-hdi-container
+      restartPolicy: Always
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cloud-native-cap-srv-hps
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cloud-native-cap-srv
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    com.sap.k8s.app: rsshub
+  name: cloud-native-cap-service
+spec:
+  ports:
+    - name: web
+      port: 8080
+      targetPort: 8080
+  selector:
+    com.sap.k8s.app: cloud-native-cap-srv
+---
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  generation: 1
+  name: cloud-native-cap-api-rule
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  rules:
+    - accessStrategies:
+        - config: {}
+          handler: allow
+      methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - HEAD
+      path: /.*
+  service:
+    host: cloud-native-cap
+    name: cloud-native-cap-service # please remember this is 'SERVICE' resource name
+    port: 8080
+status: {}

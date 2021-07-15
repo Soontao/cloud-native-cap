@@ -9,7 +9,21 @@
   "[typescript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
+  "[javascript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
   "cSpell.words": [
-    "ENOTFOUND"
-  ]
+    "ENOTFOUND",
+    "backoff",
+    "kubectl",
+    "sapcp"
+  ],
+  "editor.fontSize": 16
 }
