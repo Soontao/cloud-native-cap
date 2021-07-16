@@ -6,10 +6,13 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@sap/audit-logging": "^5.0.0",
     "@sap/cds": "^5",
     "@sap/cds-dk": "^4.3.1",
     "@sap/hana-client": "^2.9.23",
-    "express": "^4"
+    "@sap/xssec": "^3.2.2",
+    "express": "^4",
+    "passport": "^0.4.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.2",
@@ -37,6 +40,17 @@
       "db": {
         "kind": "sql",
         "model": "*"
+      },
+      "auth": {
+        "strategy": "dummy"
+      },
+      "[production]": {
+        "auth": {
+          "strategy": "xsuaa"
+        },
+        "uaa": {
+          "kind": "xsuaa"
+        }
       }
     },
     "build": {

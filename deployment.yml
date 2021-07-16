@@ -1,3 +1,51 @@
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: cloud-native-cap-xsuaa
+spec:
+  clusterServiceClassExternalName: xsuaa
+  clusterServicePlanExternalName: application
+  # xs security json to yaml
+  parameters:
+    xsappname: cloud-native-cap
+    tenant-mode: dedicated
+    scopes:
+      - description: scope allow user read houses
+        name: $XSAPPNAME.READ_HOUSE
+      - description: scope allow user write houses
+        name: $XSAPPNAME.WRITE_HOUSE
+    role-templates:
+      - name: HOUSE_VIEWER
+        scope-references:
+          - $XSAPPNAME.READ_HOUSE
+      - name: HOUSE_ADMIN
+        scope-references:
+          - $XSAPPNAME.READ_HOUSE
+          - $XSAPPNAME.WRITE_HOUSE
+status:
+  spec:
+  instanceRef:
+    name: cloud-native-cap-xsuaa
+  secretName: cloud-native-cap-xsuaa-secrets
+
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: cloud-native-cap-xsuaa-secrets
+---
+apiVersion: servicecatalog.kyma-project.io/v1alpha1
+kind: ServiceBindingUsage
+metadata:
+  name: cloud-native-cap-xsuaa-sbu
+spec:
+  serviceBindingRef:
+    name: cloud-native-cap-xsuaa-sb
+  usedBy:
+    kind: deployment
+    name: cloud-native-cap-srv
+---
 apiVersion: apps/v1
 # i prefer to use Job to deploy the contents
 # but in the job container
@@ -12,7 +60,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      com.sap.k8s.app: cloud-native-cap-hdi-container-deploy
+      com.sap.k8s.app: "cloud-native-cap-hdi-container-deploy"
   template:
     metadata:
       labels:
@@ -67,10 +115,16 @@ spec:
             - name: cloud-native-cap-hdi-container-v
               mountPath: "/etc/secrets/sapcp/hana/hdi-container"
               readOnly: true
+            - name: cloud-native-cap-xsuaa-secrets-v
+              mountPath: "/etc/secrets/sapcp/xsuaa/cloud-native-cap-xsuaa"
+              readOnly: true
       volumes:
         - name: cloud-native-cap-hdi-container-v
           secret:
             secretName: cloud-native-cap-hdi-container
+        - name: cloud-native-cap-xsuaa-secrets-v
+          secret:
+            secretName: cloud-native-cap-xsuaa-secrets
       restartPolicy: Always
 ---
 apiVersion: autoscaling/v2beta2
@@ -129,4 +183,3 @@ spec:
     host: cloud-native-cap
     name: cloud-native-cap-service # please remember this is 'SERVICE' resource name
     port: 8080
-status: {}

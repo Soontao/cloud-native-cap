@@ -1,10 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "env": {
     "node": true,
     "es6": true
@@ -17,10 +14,7 @@
       "objectLiteralDuplicateProperties": false
     }
   },
-  "extends": [
-    "plugin:@typescript-eslint/eslint-recommended",
-    "prettier"
-  ],
+  "extends": ["plugin:@typescript-eslint/eslint-recommended", "prettier"],
   "rules": {
     "max-len": [
       "error",
@@ -30,15 +24,9 @@
         "ignoreRegExpLiterals": true
       }
     ],
-    "semi": [
-      2
-    ], // must end with semi
-    "no-extra-semi": [
-      0
-    ],
-    "@typescript-eslint/no-explicit-any": [
-      0
-    ],
+    "semi": [2], // must end with semi
+    "no-extra-semi": [0],
+    "@typescript-eslint/no-explicit-any": [0],
     "quotes": [
       "error",
       "double",

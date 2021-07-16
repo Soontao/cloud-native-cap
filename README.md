@@ -7,10 +7,10 @@
 > You can use your own docker registry.
 
 ```bash
-docker build -t quay.io/cloud-native-public/cloud-native-cap-srv:0.0.1 -f cap-srv.Dockerfile .
-docker push quay.io/cloud-native-public/cloud-native-cap-srv:0.0.1
-docker build -t quay.io/cloud-native-public/cloud-native-cap-db:0.0.1 -f cap-db.Dockerfile .
-docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.1
+docker build -t quay.io/cloud-native-public/cloud-native-cap-srv:0.0.2 -f cap-srv.Dockerfile .
+docker push quay.io/cloud-native-public/cloud-native-cap-srv:0.0.2
+docker build -t quay.io/cloud-native-public/cloud-native-cap-db:0.0.2 -f cap-db.Dockerfile .
+docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.2
 ```
 
 ## prepare secrets
@@ -27,13 +27,22 @@ docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.1
 # create and use namespace
 kubectl create ns cloud-native-cap
 kubectl config set-context --current --namespace=cloud-native-cap
+# deploy config to namespace
+kubectl apply -f config-dev.yml
 # deploy to the namespace
-kubectl apply -f deployment-config-dev.yml
 kubectl apply -f deployment.yml
+```
+
+## tools
+
+### convert cf credentials to k8s secret
+
+```bash
+# login to cf firstly
+cf service-key $SERVICE_INSTANCE $SERVICE_KEY_NAME | node scripts/to_secret.js > config-dev.yml 
 ```
 
 ## other topics
 
 * docker image version
 * static resources
-

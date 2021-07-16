@@ -140,9 +140,9 @@ lib
 
 # dev
 .env
-deployment-config-local.yml
+config-local.yml
 
 # build artifacts
-*.js
-*.js.map
-*.d.ts
+srv/**/*.js
+srv/**/*.js.map
+srv/**/*.d.ts

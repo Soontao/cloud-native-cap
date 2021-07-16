@@ -20,13 +20,16 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "cSpell.words": [
+    "Autoscaler",
     "ENOTFOUND",
     "Kyma",
+    "XSAPPNAME",
     "backoff",
     "jdbc",
     "kubectl",
     "sapcp",
-    "xsenv"
+    "xsenv",
+    "xsuaa"
   ],
   "editor.fontSize": 16
 }
