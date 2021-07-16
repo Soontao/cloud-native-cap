@@ -42,6 +42,12 @@ kubectl apply -f deployment.yml
 cf service-key $SERVICE_INSTANCE $SERVICE_KEY_NAME | node scripts/to_secret.js > config-dev.yml 
 ```
 
+### convert cds modeling to xs-security.json (manually adjustment required)
+
+```bash
+cds compile srv --to xsuaa
+```
+
 ## other topics
 
 * docker image version
