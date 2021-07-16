@@ -7,10 +7,10 @@
 > You can use your own docker registry.
 
 ```bash
-docker build -t quay.io/cloud-native-public/cloud-native-cap-srv -f cap-srv.Dockerfile .
-docker push quay.io/cloud-native-public/cloud-native-cap-srv
-docker build -t quay.io/cloud-native-public/cloud-native-cap-db -f cap-db.Dockerfile .
-docker push quay.io/cloud-native-public/cloud-native-cap-db
+docker build -t quay.io/cloud-native-public/cloud-native-cap-srv:0.0.1 -f cap-srv.Dockerfile .
+docker push quay.io/cloud-native-public/cloud-native-cap-srv:0.0.1
+docker build -t quay.io/cloud-native-public/cloud-native-cap-db:0.0.1 -f cap-db.Dockerfile .
+docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.1
 ```
 
 ## prepare secrets

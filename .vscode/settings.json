@@ -23,8 +23,10 @@
     "ENOTFOUND",
     "Kyma",
     "backoff",
+    "jdbc",
     "kubectl",
-    "sapcp"
+    "sapcp",
+    "xsenv"
   ],
   "editor.fontSize": 16
 }

@@ -1,17 +1,27 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+# i prefer to use Job to deploy the contents
+# but in the job container
+# the deployer can not connect to target HANA db
+# use Deployment as a walk around
+kind: Deployment
 metadata:
-  name: cloud-native-cap-hdi-container-deploy-job
+  labels:
+    com.sap.k8s.app: cloud-native-cap-hdi-container-deploy
+  name: cloud-native-cap-hdi-container-deploy
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      com.sap.k8s.app: cloud-native-cap-hdi-container-deploy
   template:
+    metadata:
+      labels:
+        com.sap.k8s.app: cloud-native-cap-hdi-container-deploy
     spec:
       containers:
         - name: cloud-native-cap-hdi-container-v
-          image: quay.io/cloud-native-public/cloud-native-cap-db:latest
+          image: quay.io/cloud-native-public/cloud-native-cap-db:0.0.1
           imagePullPolicy: Always
-          env:
-            - name: DEBUG
-              value: "*"
           resources:
             limits:
               cpu: "0.5"
@@ -24,8 +34,7 @@ spec:
         - name: cloud-native-cap-hdi-container-v
           secret:
             secretName: cloud-native-cap-hdi-container
-      restartPolicy: Never
-  backoffLimit: 4
+      restartPolicy: Always
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -45,7 +54,7 @@ spec:
         com.sap.k8s.app: cloud-native-cap-srv
     spec:
       containers:
-        - image: quay.io/cloud-native-public/cloud-native-cap-srv:latest
+        - image: quay.io/cloud-native-public/cloud-native-cap-srv:0.0.1
           imagePullPolicy: Always
           name: cloud-native-cap-srv
           ports:

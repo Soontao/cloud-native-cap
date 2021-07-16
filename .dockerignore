@@ -1,2 +1,5 @@
 node_modules
 gen
+db/node_modules
+srv/node_modules
+.vscode
