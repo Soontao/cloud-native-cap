@@ -16,11 +16,12 @@ apiVersion: v1
 kind: Secret
 type: Opaque
 metadata:
-  name: ${serviceName}`);
+  name: ${serviceName}
+data:`);
     inbound = inbound.replace(/^Getting key.*?for service instance.*?\.\.\.$/gm, "");
     const secrets = JSON.parse(inbound);
     for (const [key, value] of Object.entries(secrets)) {
-      console.log(`${key}: ${Buffer.from(value, "utf-8").toString("base64")}`);
+      console.log(`  ${key}: ${Buffer.from(value, "utf-8").toString("base64")}`);
     }
   })
   .catch((error) => {

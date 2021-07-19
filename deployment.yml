@@ -103,7 +103,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    com.sap.k8s.app: rsshub
+    com.sap.k8s.app: cloud-native-cap-service
   name: cloud-native-cap-service
 spec:
   ports:
