@@ -68,16 +68,16 @@ spec:
             - name: cloud-native-cap-hdi-container-v
               mountPath: "/etc/secrets/sapcp/hana/hdi-container"
               readOnly: true
-            - name: cloud-native-cap-xsuaa-secrets-v
+            - name: cloud-native-cap-xsuaa-sb-v
               mountPath: "/etc/secrets/sapcp/xsuaa/cloud-native-cap-xsuaa"
               readOnly: true
       volumes:
         - name: cloud-native-cap-hdi-container-v
           secret:
             secretName: cloud-native-cap-hdi-container
-        - name: cloud-native-cap-xsuaa-secrets-v
+        - name: cloud-native-cap-xsuaa-sb-v
           secret:
-            secretName: cloud-native-cap-xsuaa-secrets
+            secretName: cloud-native-cap-xsuaa-sb
       restartPolicy: Always
 ---
 apiVersion: autoscaling/v2beta2
