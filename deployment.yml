@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: cloud-native-cap-hdi-container-v
-          image: quay.io/cloud-native-public/cloud-native-cap-db:0.0.2
+          image: quay.io/cloud-native-public/cloud-native-cap-db:0.0.3
           imagePullPolicy: Always
           resources:
             limits:
@@ -55,7 +55,7 @@ spec:
         com.sap.k8s.app: cloud-native-cap-srv
     spec:
       containers:
-        - image: quay.io/cloud-native-public/cloud-native-cap-srv:0.0.2
+        - image: quay.io/cloud-native-public/cloud-native-cap-srv:0.0.3
           imagePullPolicy: Always
           name: cloud-native-cap-srv
           ports:

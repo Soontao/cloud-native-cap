@@ -43,14 +43,6 @@
       },
       "auth": {
         "strategy": "dummy"
-      },
-      "[production]": {
-        "auth": {
-          "strategy": "xsuaa"
-        },
-        "uaa": {
-          "kind": "xsuaa"
-        }
       }
     },
     "build": {
