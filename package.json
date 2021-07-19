@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@newdash/newdash": "^5.19.0",
     "@sap/audit-logging": "^5.0.0",
     "@sap/cds": "^5",
     "@sap/cds-dk": "^4.3.1",
@@ -15,19 +16,24 @@
     "passport": "^0.4.1"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.24",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "sqlite3": "^5.0.2",
+    "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   },
   "scripts": {
     "start": "cds run",
-    "build": "tsc && cds build"
+    "build": "tsc && cds build",
+    "test": "jest --runInBand",
+    "coverage": "npm test -- --coverage --no-cache"
   },
   "cds": {
     "odata": {

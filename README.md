@@ -12,6 +12,7 @@
     - [convert cf credentials to k8s secret](#convert-cf-credentials-to-k8s-secret)
     - [convert cds modeling to xs-security.json (manually adjustment required)](#convert-cds-modeling-to-xs-securityjson-manually-adjustment-required)
     - [add xsuaa authentication/authorization for service](#add-xsuaa-authenticationauthorization-for-service)
+    - [built-in jest support](#built-in-jest-support)
   - [other topics](#other-topics)
 
 ## build images
@@ -95,6 +96,19 @@ cds compile srv --to xsuaa
     }
   }
 }
+```
+
+### built-in jest support
+
+```bash
+$ npm run test
+
+> cloud-native-cap@1.0.0 test
+> jest --runInBand
+
+ PASS  test/example.test.ts
+  Example Service Test Suite
+    ✓ should support basic CRUD (140 ms)
 ```
 
 
