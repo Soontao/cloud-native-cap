@@ -1,5 +1,7 @@
 # cloud-native-cap
 
+[![node-test](https://github.com/Soontao/cloud-native-cap/actions/workflows/node-test.yml/badge.svg)](https://github.com/Soontao/cloud-native-cap/actions/workflows/node-test.yml)
+
 > build SAP CAP project with cloud native architecture
 
 - [cloud-native-cap](#cloud-native-cap)
