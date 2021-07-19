@@ -27,9 +27,9 @@ docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.3
 
 ## prepare HANA secrets
 
-* configure the HANA instance to accept external connection from BTP Kyma Runtime
-* create `hdi-container` in SAP BTP CF Runtime
-* create secret key & convert them fields to base64, and fill the values to `config-dev.yml`
+* [configure the HANA instance to accept external connection from BTP Kyma Runtime](https://gist.github.com/Soontao/2d39877071ed0574377fcdb68a1c58df)
+* create a `hdi-container` for storage in SAP BTP CF Runtime
+* create secret key & convert them fields to base64, and fill the values to `config-hana-dev.yml`
 
 ## deploy
 
@@ -40,7 +40,7 @@ docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.3
 kubectl create ns cloud-native-cap
 kubectl config set-context --current --namespace=cloud-native-cap
 # deploy hana config to namespace
-kubectl apply -f config-dev.yml
+kubectl apply -f config-hana-dev.yml
 # deploy uaa to namespace
 kubectl apply -f config-uaa.yml
 # deploy to the namespace
@@ -67,7 +67,7 @@ builtin debug configuration (nodejs) and docker image example
 
 ```bash
 # login to cf firstly
-cf service-key $SERVICE_INSTANCE $SERVICE_KEY_NAME | node scripts/to_secret.js > config-dev.yml 
+cf service-key $SERVICE_INSTANCE $SERVICE_KEY_NAME | node scripts/to_secret.js > config-hana-dev.yml 
 ```
 
 ### convert cds modeling to xs-security.json (manually adjustment required)
