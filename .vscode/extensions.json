@@ -1,25 +1,22 @@
 {
-	// See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
-	// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
-
-	// List of extensions which should be recommended for users of this workspace.
-	"recommendations": [
-		// >>>>>>>> Add CDS Editor here as soon it is available of vscode marketplace!,
-		"dbaeumer.vscode-eslint",
-		"mechatroner.rainbow-csv",
-		"humao.rest-client",
-		"alexcvzz.vscode-sqlite",
-		"hbenl.vscode-mocha-test-adapter",
-		"sdras.night-owl",
+  // See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+  // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+  // List of extensions which should be recommended for users of this workspace.
+  "recommendations": [
+    // >>>>>>>> Add CDS Editor here as soon it is available of vscode marketplace!,
+    "dbaeumer.vscode-eslint",
+    "mechatroner.rainbow-csv",
+    "humao.rest-client",
+    "alexcvzz.vscode-sqlite",
+    "hbenl.vscode-mocha-test-adapter",
+    "sdras.night-owl",
     "EditorConfig.EditorConfig",
     "rvest.vs-code-prettier-eslint",
     "orta.vscode-jest",
     "andys8.jest-snippets",
     "theosun.sap-json-schemas",
     "ms-kubernetes-tools.vscode-kubernetes-tools"
-	],
-	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
-	"unwantedRecommendations": [
-
-	]
+  ],
+  // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
+  "unwantedRecommendations": []
 }
