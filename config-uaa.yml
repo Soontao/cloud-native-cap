@@ -1,0 +1,34 @@
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: cloud-native-cap-xsuaa
+spec:
+  clusterServiceClassExternalName: xsuaa
+  clusterServicePlanExternalName: application
+  # xs security json to yaml
+  parameters:
+    xsappname: cloud-native-cap
+    tenant-mode: dedicated
+    scopes:
+      - description: scope allow user read houses
+        name: $XSAPPNAME.READ_HOUSE
+      - description: scope allow user write houses
+        name: $XSAPPNAME.WRITE_HOUSE
+    role-templates:
+      - name: HOUSE_VIEWER
+        scope-references:
+          - $XSAPPNAME.READ_HOUSE
+      - name: HOUSE_ADMIN
+        scope-references:
+          - $XSAPPNAME.READ_HOUSE
+          - $XSAPPNAME.WRITE_HOUSE
+
+---
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: cloud-native-cap-xsuaa-sb
+spec:
+  instanceRef:
+    name: cloud-native-cap-xsuaa

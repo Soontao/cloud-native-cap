@@ -1,51 +1,4 @@
 ---
-apiVersion: servicecatalog.k8s.io/v1beta1
-kind: ServiceInstance
-metadata:
-  name: cloud-native-cap-xsuaa
-spec:
-  clusterServiceClassExternalName: xsuaa
-  clusterServicePlanExternalName: application
-  # xs security json to yaml
-  parameters:
-    xsappname: cloud-native-cap
-    tenant-mode: dedicated
-    scopes:
-      - description: scope allow user read houses
-        name: $XSAPPNAME.READ_HOUSE
-      - description: scope allow user write houses
-        name: $XSAPPNAME.WRITE_HOUSE
-    role-templates:
-      - name: HOUSE_VIEWER
-        scope-references:
-          - $XSAPPNAME.READ_HOUSE
-      - name: HOUSE_ADMIN
-        scope-references:
-          - $XSAPPNAME.READ_HOUSE
-          - $XSAPPNAME.WRITE_HOUSE
-status:
-  spec:
-  instanceRef:
-    name: cloud-native-cap-xsuaa
-  secretName: cloud-native-cap-xsuaa-secrets
-
----
-apiVersion: servicecatalog.k8s.io/v1beta1
-kind: ServiceBinding
-metadata:
-  name: cloud-native-cap-xsuaa-secrets
----
-apiVersion: servicecatalog.kyma-project.io/v1alpha1
-kind: ServiceBindingUsage
-metadata:
-  name: cloud-native-cap-xsuaa-sbu
-spec:
-  serviceBindingRef:
-    name: cloud-native-cap-xsuaa-sb
-  usedBy:
-    kind: deployment
-    name: cloud-native-cap-srv
----
 apiVersion: apps/v1
 # i prefer to use Job to deploy the contents
 # but in the job container
@@ -68,7 +21,7 @@ spec:
     spec:
       containers:
         - name: cloud-native-cap-hdi-container-v
-          image: quay.io/cloud-native-public/cloud-native-cap-db:0.0.1
+          image: quay.io/cloud-native-public/cloud-native-cap-db:0.0.2
           imagePullPolicy: Always
           resources:
             limits:
@@ -102,7 +55,7 @@ spec:
         com.sap.k8s.app: cloud-native-cap-srv
     spec:
       containers:
-        - image: quay.io/cloud-native-public/cloud-native-cap-srv:0.0.1
+        - image: quay.io/cloud-native-public/cloud-native-cap-srv:0.0.2
           imagePullPolicy: Always
           name: cloud-native-cap-srv
           ports:
@@ -160,6 +113,7 @@ spec:
   selector:
     com.sap.k8s.app: cloud-native-cap-srv
 ---
+# expose as external HTTPS endpoint, internal works with istio
 apiVersion: gateway.kyma-project.io/v1alpha1
 kind: APIRule
 metadata:
@@ -183,3 +137,15 @@ spec:
     host: cloud-native-cap
     name: cloud-native-cap-service # please remember this is 'SERVICE' resource name
     port: 8080
+---
+# service binding
+apiVersion: servicecatalog.kyma-project.io/v1alpha1
+kind: ServiceBindingUsage
+metadata:
+  name: cloud-native-cap-xsuaa-sbu
+spec:
+  serviceBindingRef:
+    name: cloud-native-cap-xsuaa-sb
+  usedBy:
+    kind: deployment
+    name: cloud-native-cap-srv
