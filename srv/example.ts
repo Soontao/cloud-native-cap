@@ -7,7 +7,7 @@ module.exports = class ExampleService extends ApplicationService {
   async init() {
     await super.init();
 
-    this.after("READ", "Houses", this._afterReadHouses.bind(this));
+    this.after("READ", "Houses", this._afterReadHouses);
   }
 
   private async _afterReadHouse(result, req: Request) {
