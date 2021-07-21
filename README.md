@@ -8,7 +8,6 @@
   - [build images](#build-images)
   - [prepare HANA secrets](#prepare-hana-secrets)
   - [deploy](#deploy)
-    - [clean hdi-deployer after deployment](#clean-hdi-deployer-after-deployment)
   - [tooltips](#tooltips)
     - [typescript support](#typescript-support)
     - [convert cf credentials to k8s secret](#convert-cf-credentials-to-k8s-secret)
@@ -22,10 +21,10 @@
 > You can use your own docker registry.
 
 ```bash
-docker build -t quay.io/cloud-native-public/cloud-native-cap-srv:0.0.3 -f cap-srv.Dockerfile .
-docker push quay.io/cloud-native-public/cloud-native-cap-srv:0.0.3
-docker build -t quay.io/cloud-native-public/cloud-native-cap-db:0.0.3 -f cap-db.Dockerfile .
-docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.3
+docker build -t quay.io/cloud-native-public/cloud-native-cap-srv:0.0.4 -f cap-srv.Dockerfile .
+docker push quay.io/cloud-native-public/cloud-native-cap-srv:0.0.4
+docker build -t quay.io/cloud-native-public/cloud-native-cap-db:0.0.4 -f cap-db.Dockerfile .
+docker push quay.io/cloud-native-public/cloud-native-cap-db:0.0.4
 ```
 
 ## prepare HANA secrets
@@ -48,14 +47,6 @@ kubectl apply -f config-hana-dev.yml
 kubectl apply -f config-uaa.yml
 # deploy to the namespace
 kubectl apply -f deployment.yml
-```
-
-### clean hdi-deployer after deployment
-
-> There are a unknown HANA network access issue for k8s `Job` resource, so we just use `Deployment` to perform `hdi-deploy`, but we must clean it after deploy to free the resource.
-
-```bash
-kubectl delete deployment cloud-native-cap-hdi-container-deploy
 ```
 
 ## tooltips
