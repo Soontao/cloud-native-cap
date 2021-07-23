@@ -25,6 +25,7 @@ export class RedisService {
         if (!connected) {
           reject(error);
         }
+        this._client.end(false);
         console.error(error);
       });
       this._client.on("connect", () => {
