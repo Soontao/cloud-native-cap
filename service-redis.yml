@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    com.sap.k8s.service: cloud-native-cap-redis
+  name: cloud-native-cap-redis
+spec:
+  serviceName: cloud-native-cap-redis
+  selector:
+    matchLabels:
+      com.sap.k8s.service: cloud-native-cap-redis
+  template:
+    metadata:
+      labels:
+        com.sap.k8s.service: cloud-native-cap-redis
+    spec:
+      containers:
+        - image: redis:6
+          imagePullPolicy: Always
+          name: redis
+          ports:
+            - containerPort: 6379
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: "500Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-native-cap-redis-sv
+spec:
+  selector:
+    app: cloud-native-cap-redis-sv
+  ports:
+    - port: 6379
+      targetPort: 6379
