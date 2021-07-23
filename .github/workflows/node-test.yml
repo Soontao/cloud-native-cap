@@ -52,7 +52,7 @@ jobs:
           npm run build --if-present
           npm run coverage
         env:
-          REDIS_HOST: 127.0.0.1
+          REDIS_HOST: redis
           CI: true
 
       - name: upload coverage
