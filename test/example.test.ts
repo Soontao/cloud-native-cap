@@ -1,6 +1,7 @@
 // @ts-nocheck
 import cds from "@sap/cds";
 import path from "path";
+import { defaultRedisService } from "../srv/services/RedisService";
 
 describe("Example Service Test Suite", () => {
   const server = cds.test(path.join(__dirname, ".."));
@@ -27,5 +28,9 @@ describe("Example Service Test Suite", () => {
       data: { value: list }
     } = await server.get(`/example/Houses`);
     expect(list?.[0]?.address).toBe("Unknown");
+  });
+
+  afterAll(() => {
+    defaultRedisService.stop();
   });
 });

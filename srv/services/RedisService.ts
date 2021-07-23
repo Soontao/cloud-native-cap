@@ -58,6 +58,9 @@ export class RedisService {
   public async delete(...keys: Array<string>): Promise<void> {
     return callToPromise(this._client.del, this._client, ...keys);
   }
+  public stop() {
+    this._client.end(true);
+  }
 
   public async get(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
