@@ -1,19 +1,12 @@
+import { Service } from "@sap/cds";
 import { createClient, RedisClient } from "redis";
 
-function callToPromise<R>(func: Function, ctx: any, ...args: any[]): Promise<R> {
-  return new Promise((resolve, reject) => {
-    func.call(ctx, ...args, (err: Error, result: any) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result as R);
-      }
-    });
-  });
-}
-
-export class RedisService {
+export class RedisService extends Service {
   private _client: RedisClient;
+
+  async init() {
+    await this.connect();
+  }
 
   public async connect(): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -55,9 +48,10 @@ export class RedisService {
     });
   }
 
-  public async delete(...keys: Array<string>): Promise<void> {
+  public async del(...keys: Array<string>): Promise<void> {
     return callToPromise(this._client.del, this._client, ...keys);
   }
+
   public stop() {
     this._client.end(true);
   }
@@ -80,4 +74,14 @@ export class RedisService {
   }
 }
 
-export const defaultRedisService = new RedisService();
+function callToPromise<R>(func: Function, ctx: any, ...args: any[]): Promise<R> {
+  return new Promise((resolve, reject) => {
+    func.call(ctx, ...args, (err: Error, result: any) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result as R);
+      }
+    });
+  });
+}

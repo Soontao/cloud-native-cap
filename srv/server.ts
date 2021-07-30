@@ -1,7 +1,7 @@
 import cds from "@sap/cds";
-import { defaultRedisService } from "./services/RedisService";
+import { RedisService } from "./fundamental/redis";
 cds.on("bootstrap", async (app) => {
-  // await some services ready
-  await defaultRedisService.connect();
+  // @ts-ignore
+  await cds.connect.to("redis", { kind: "kv", impl: RedisService });
 });
 module.exports = cds.server;

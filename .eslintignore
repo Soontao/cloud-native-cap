@@ -1,7 +1,7 @@
-lib
-commitlint.config.js
-node_modules
-srv/**/*.js
-srv/**/*.js.map
-srv/**/*.d.ts
-gen
+/lib
+/commitlint.config.js
+/node_modules
+/srv/**/*.js
+/srv/**/*.js.map
+/srv/**/*.d.ts
+/gen

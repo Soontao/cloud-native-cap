@@ -8,8 +8,8 @@
   "dependencies": {
     "@newdash/newdash": "^5.19.0",
     "@sap/audit-logging": "^5.0.0",
-    "@sap/cds": "^5",
-    "@sap/cds-dk": "^4.3.1",
+    "@sap/cds": "^5.3.2",
+    "@sap/cds-dk": "^4.3.3",
     "@sap/hana-client": "^2.9.23",
     "@sap/xsenv": "^3.1.1",
     "@sap/xssec": "^3.2.2",
@@ -18,6 +18,8 @@
     "redis": "^3.1.2"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/chai": "^4.2.21",
     "@types/jest": "^26.0.24",
     "@types/redis": "^2.8.31",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
