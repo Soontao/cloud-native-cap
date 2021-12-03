@@ -1,17 +1,10 @@
 import { isArray, isEmpty } from "@newdash/newdash";
-import { ApplicationService } from "@sap/cds";
 import { Request } from "@sap/cds/apis/services";
+import { AfterRead } from "./annotations/MethodBinding";
+import { BaseService } from "./common/services/BaseService";
 
 // must use module exports now
-module.exports = class ExampleService extends ApplicationService {
-  private redis: any;
-
-  async init() {
-    await super.init();
-    this.redis = await cds.connect.to("redis");
-    this.after("READ", "Houses", this._afterReadHouses);
-  }
-
+class ExampleService extends BaseService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private async _afterReadHouse(result, req: Request) {
     await this.redis.set("a", 1);
@@ -20,7 +13,8 @@ module.exports = class ExampleService extends ApplicationService {
     }
   }
 
-  private async _afterReadHouses(results: any | any[], req: Request) {
+  @AfterRead("Houses")
+  public async _afterReadHouses(results: any | any[], req: Request) {
     if (isArray(results)) {
       for (const item of results) {
         await this._afterReadHouse(item, req);
@@ -29,4 +23,6 @@ module.exports = class ExampleService extends ApplicationService {
       await this._afterReadHouse(results, req);
     }
   }
-};
+}
+
+module.exports = ExampleService;
