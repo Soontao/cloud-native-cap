@@ -12,6 +12,7 @@ module.exports = class ExampleService extends ApplicationService {
     this.after("READ", "Houses", this._afterReadHouses);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private async _afterReadHouse(result, req: Request) {
     await this.redis.set("a", 1);
     if (isEmpty(result.address)) {
