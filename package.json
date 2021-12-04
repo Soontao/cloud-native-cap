@@ -13,16 +13,19 @@
     "@sap/hana-client": "^2.10.20",
     "@sap/xsenv": "^3.1.1",
     "@sap/xssec": "^3.2.11",
+    "ajv": "^8.8.2",
     "express": "^4.17.1",
     "passport": "^0.4.1",
     "redis": "^3.1.2",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/chai": "^4.2.22",
     "@types/jest": "^27.0.3",
     "@types/redis": "^2.8.32",
+    "@types/validator": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",

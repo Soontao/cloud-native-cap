@@ -1,5 +1,5 @@
 import cds from "@sap/cds";
-import { RedisService } from "../../srv/fundamental/redis";
+import { RedisService } from "../../srv/common/cache";
 import { setupTest, stopRedis } from "../utils";
 
 describe("Redis Service Test", () => {

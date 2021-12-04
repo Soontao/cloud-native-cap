@@ -27,6 +27,14 @@ describe("Example Service Test Suite", () => {
     expect(list?.[0]?.address).toBe("Unknown");
   });
 
+  it("should support unbounded echo action", async () => {
+    const randomValue = (Math.random() * 10000).toFixed(0);
+    const {
+      data: { value }
+    } = await server.post("/example/Echo", { payload: { value: randomValue } });
+    expect(value).toEqual(randomValue);
+  });
+
   afterAll(async () => {
     await stopRedis();
   });

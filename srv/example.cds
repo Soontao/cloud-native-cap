@@ -19,4 +19,10 @@ service ExampleService {
     }
   ]) as projection on model.House;
 
+  action Echo(payload : {
+    value : String(255)
+  }) returns {
+    value : String(255)
+  }
+
 }

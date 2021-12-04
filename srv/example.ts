@@ -1,6 +1,6 @@
 import { isArray, isEmpty } from "@newdash/newdash";
 import { Request } from "@sap/cds/apis/services";
-import { AfterRead } from "./annotations/MethodBinding";
+import { AfterRead, On } from "./annotations/MethodBinding";
 import { BaseService } from "./common/services/BaseService";
 
 // must use module exports now
@@ -22,6 +22,12 @@ class ExampleService extends BaseService {
     } else {
       await this._afterReadHouse(results, req);
     }
+  }
+
+  @On("Echo")() // unbound
+  public async onEcho(req: Request) {
+    this.logger.info("echo API called with payload", req.data);
+    return req.reply(req.data.payload);
   }
 }
 

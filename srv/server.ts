@@ -1,5 +1,5 @@
 import cds from "@sap/cds";
-import { RedisService } from "./fundamental/redis";
+import { RedisService } from "./common/cache/redis";
 
 cds.on("bootstrap", async () => {
   // @ts-ignore

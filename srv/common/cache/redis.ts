@@ -1,7 +1,8 @@
 import { Service } from "@sap/cds";
 import { createClient, RedisClient } from "redis";
+import { CacheService } from ".";
 
-export class RedisService extends Service {
+export class RedisService extends Service implements CacheService {
   private _client: RedisClient;
 
   async init() {
