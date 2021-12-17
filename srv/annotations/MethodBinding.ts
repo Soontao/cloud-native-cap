@@ -29,8 +29,17 @@ export interface MethodBindingMetadata extends Metadata {
 }
 
 const createBindingAnnotation =
+/**
+ * @see https://cap.cloud.sap/docs/node.js/services#event-handlers
+ */
   (hook: Hook) =>
+  /**
+   * @see https://cap.cloud.sap/docs/node.js/services#event-handlers
+   */
     (event: Event) =>
+      /**
+       * @see https://cap.cloud.sap/docs/node.js/services#event-handlers
+       */
       (entity?: string): MethodDecorator => {
         return function (target: any, propertyKey: string | symbol) {
           const bindings: Array<MethodBindingMetadata> = getMethodBindings(target);
