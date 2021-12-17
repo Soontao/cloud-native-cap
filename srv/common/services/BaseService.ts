@@ -19,7 +19,7 @@ export class BaseService extends ApplicationService {
    * this.cacheProvider.provision("cacheName")
    * ```
    */
-  protected cacheProvider: CacheProvider;
+  protected cacheProvider!: CacheProvider;
   
   /**
    * fundamental logger layer
@@ -29,7 +29,7 @@ export class BaseService extends ApplicationService {
    * this.logger.info("message payload is", req.body, "please check input")
    * ```
    */
-  protected logger: Logger;
+  protected logger!: Logger;
 
   async init() {
     

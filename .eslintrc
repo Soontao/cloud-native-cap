@@ -1,5 +1,5 @@
 {
-  "root": true,
+  "root": false,
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
@@ -19,7 +19,8 @@
   },
   "extends": [
     "plugin:@typescript-eslint/eslint-recommended",
-    "prettier"
+    "prettier",
+    "plugin:@sap/cds/recommended"
   ],
   "rules": {
     "max-len": [
@@ -32,7 +33,7 @@
     ],
     "semi": [
       2
-    ], // must end with semi
+    ],
     "no-extra-semi": [
       0
     ],

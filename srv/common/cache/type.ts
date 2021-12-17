@@ -4,7 +4,7 @@
 export interface Cache<K = string, V = any> {
   set(key: K, value: V, timeout?: number): Promise<void>;
   del(...keys: Array<K>): Promise<void>;
-  get(key: K): Promise<V>;
+  get(key: K): Promise<V | null>;
 }
 
 /**

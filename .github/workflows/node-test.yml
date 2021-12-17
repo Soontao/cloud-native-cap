@@ -19,6 +19,8 @@ jobs:
         node-version: [16.x, 17.x]
         os: [ubuntu-latest]
 
+    timeout-minutes: 30
+
     services:
       redis:
         image: redis

@@ -5,7 +5,7 @@ import { Cache, CacheProvider } from "./type";
 
 export class RedisCacheProvider implements CacheProvider {
 
-  private _client: RedisClient;
+  private _client!: RedisClient;
 
   public async connect(): Promise<RedisCacheProvider> {
     return new Promise((resolve, reject) => {
@@ -81,7 +81,7 @@ export class RedisCache<K, V> implements Cache<K, V> {
   }
 
 
-  public async get(key: K): Promise<any> {
+  public async get(key: K): Promise<V | null> {
     return new Promise((resolve, reject) => {
       this._client.get(this._toKey(key), (err, reply) => {
         if (err) {
@@ -90,8 +90,7 @@ export class RedisCache<K, V> implements Cache<K, V> {
           try {
             resolve(JSON.parse(reply));
           } catch (error) {
-            // ignore error
-            resolve(reply);
+            resolve(reply as any);
           }
         }
       });

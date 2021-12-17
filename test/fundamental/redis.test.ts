@@ -12,7 +12,7 @@ describe("Redis Service Test", () => {
     expect(await cache.get("test-uuid")).toBe("value");
     await server.sleep(1100);
     expect(await cache.get("test-uuid")).toBeNull();
-    await provider.stop();
+    provider.stop();
   });
 
  

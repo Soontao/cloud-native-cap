@@ -1,35 +1,39 @@
 {
-  "editor.insertSpaces": true,
-  "editor.tabSize": 2,
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-  },
-  "[json]": {
-    "editor.quickSuggestions": {
-      "strings": true
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true
     },
-    "editor.suggest.insertMode": "replace",
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "cSpell.words": [
-    "Autoscaler",
-    "ENOTFOUND",
-    "Kyma",
-    "XSAPPNAME",
-    "backoff",
-    "jdbc",
-    "kubectl",
-    "sapcp",
-    "xsenv",
-    "xsuaa"
-  ],
-  "editor.fontSize": 16
+    "[typescript]": {
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    },
+    "[json]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace",
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "cSpell.words": [
+        "Autoscaler",
+        "ENOTFOUND",
+        "Kyma",
+        "XSAPPNAME",
+        "backoff",
+        "jdbc",
+        "kubectl",
+        "sapcp",
+        "xsenv",
+        "xsuaa"
+    ],
+    "editor.fontSize": 16,
+    "eslint.validate": [
+        "cds",
+        "csn"
+    ]
 }
