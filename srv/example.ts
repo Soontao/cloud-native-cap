@@ -1,13 +1,21 @@
 import { isArray, isEmpty } from "@newdash/newdash";
 import { Request } from "@sap/cds/apis/services";
 import { AfterRead, On } from "./annotations/MethodBinding";
+import { Cache } from "./common/cache";
 import { BaseService } from "./common/services/BaseService";
 
 // must use module exports now
 class ExampleService extends BaseService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  private housesCache: Cache<string, any>;
+
+  async init() {
+    await super.init(); 
+    this.housesCache = await this.cacheProvider.provision<string, any>("houses");
+  }
+  
   private async _afterReadHouse(result, req: Request) {
-    await this.redis.set("a", 1);
+    await this.housesCache.set("a", 1);
     if (isEmpty(result.address)) {
       result.address = "Unknown";
     }

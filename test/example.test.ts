@@ -1,4 +1,4 @@
-import { setupTest, stopRedis } from "./utils";
+import { setupTest } from "./utils";
 
 describe("Example Service Test Suite", () => {
   const server = setupTest();
@@ -35,7 +35,4 @@ describe("Example Service Test Suite", () => {
     expect(value).toEqual(randomValue);
   });
 
-  afterAll(async () => {
-    await stopRedis();
-  });
 });

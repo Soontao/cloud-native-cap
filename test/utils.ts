@@ -18,11 +18,3 @@ type TestFacade = TestUtil & Pick<AxiosInstance, "get" | "post" | "delete" | "pa
 export function setupTest(): TestFacade {
   return cds.test(path.join(__dirname, ".."));
 }
-
-/**
- * stop redis after test
- */
-export async function stopRedis() {
-  const redis: RedisService = (await cds.connect.to("redis")) as any;
-  redis.stop();
-}

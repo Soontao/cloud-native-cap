@@ -10,9 +10,7 @@
         "--runInBand",
         "--watchAll=false"
       ],
-      "env": {
-        "REDIS_HOST": "127.0.0.1"
-      },
+      "env": {},
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
@@ -27,9 +25,7 @@
         "-r",
         "ts-node/register"
       ],
-      "env": {
-        "REDIS_HOST": "127.0.0.1"
-      },
+      "env": {},
       "args": [
         "run",
         "--with-mocks",

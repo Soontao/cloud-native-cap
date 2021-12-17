@@ -1,15 +1,13 @@
-import { Service } from "@sap/cds";
+import { hash } from "@newdash/newdash/functional/hash";
 import { createClient, RedisClient } from "redis";
-import { CacheService } from ".";
+import { Cache, CacheProvider } from "./type";
 
-export class RedisService extends Service implements CacheService {
+
+export class RedisCacheProvider implements CacheProvider {
+
   private _client: RedisClient;
 
-  async init() {
-    await this.connect();
-  }
-
-  public async connect(): Promise<void> {
+  public async connect(): Promise<RedisCacheProvider> {
     return new Promise((resolve, reject) => {
       this._client = createClient({
         host: process.env.REDIS_HOST
@@ -24,42 +22,68 @@ export class RedisService extends Service implements CacheService {
       });
       this._client.on("connect", () => {
         connected = true;
-        resolve();
+        resolve(this);
       });
     });
   }
 
-  public async set(key: string, value: any, timeout?: number): Promise<"OK"> {
-    return new Promise((resolve, reject) => {
-      const cb = (err: Error, reply: "OK") => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(reply);
-        }
-      };
-
-      value = JSON.stringify(value);
-
-      if (timeout !== undefined) {
-        this._client.setex(key, timeout, value, cb);
-      } else {
-        this._client.set(key, value, cb);
-      }
-    });
+  public provision<K, V>(cacheId: string): Promise<Cache<K, V>> {
+    return new RedisCache<K, V>(this._client, cacheId) as any;
   }
 
-  public async del(...keys: Array<string>): Promise<void> {
-    return callToPromise(this._client.del, this._client, ...keys);
-  }
 
   public stop() {
     this._client.end(true);
   }
+  
+}
 
-  public async get(key: string): Promise<any> {
+export class RedisCache<K, V> implements Cache<K, V> {
+  
+  private _client: RedisClient;
+
+  private _prefix: string;
+
+  constructor(client: RedisClient, prefix: string) {
+    this._client = client;
+    this._prefix = prefix;
+  }
+
+  private _toKey(key: K) {
+    return hash(this._prefix, key);
+  }
+
+  public async set(key: K, value: V, timeout?: number): Promise<void> {
     return new Promise((resolve, reject) => {
-      this._client.get(key, (err, reply) => {
+      const cb = (err: Error) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(undefined);
+        }
+      };
+
+      // @ts-ignore
+      value = JSON.stringify(value);
+
+      if (timeout !== undefined && timeout > 0) {
+        // @ts-ignore
+        this._client.setex(this._toKey(key), timeout, value, cb);
+      } else {
+        // @ts-ignore
+        this._client.set(this._toKey(key), value, cb);
+      }
+    });
+  }
+
+  public async del(...keys: Array<K>): Promise<void> {
+    return callToPromise(this._client.del, this._client, ...(keys.map(key => this._toKey(key))));
+  }
+
+
+  public async get(key: K): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._client.get(this._toKey(key), (err, reply) => {
         if (err) {
           reject(err);
         } else {
