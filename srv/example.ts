@@ -22,7 +22,7 @@ class ExampleService extends BaseService {
   }
 
   @AfterRead("Houses")
-  public async _afterReadHouses(results: any | any[], req: Request) {
+  public async afterReadHouses(results: any | any[], req: Request) {
     if (isArray(results)) {
       for (const item of results) {
         await this._afterReadHouse(item, req);

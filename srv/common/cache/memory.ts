@@ -39,13 +39,13 @@ export class MemoryCache<K, V> implements Cache<K, V> {
 
 export class MemoryCacheProvider implements CacheProvider {
 
-  #caches: Map<string, Cache<any, any>> = new LRUMap(10000); // avoid OOM
+  private _caches: Map<string, Cache<any, any>> = new LRUMap(10000); // avoid OOM
 
   async provision<K, V>(cacheId: string): Promise<Cache<K, V>> {
-    if (!this.#caches.has(cacheId)) {
-      this.#caches.set(cacheId, new MemoryCache<K, V>());
+    if (!this._caches.has(cacheId)) {
+      this._caches.set(cacheId, new MemoryCache<K, V>());
     }
-    return this.#caches.get(cacheId);
+    return this._caches.get(cacheId);
   }
 
 }
