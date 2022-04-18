@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: docker-registry-vol-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: default
+  volumeMode: Filesystem
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    com.sap.k8s.app: docker-registry
+  name: docker-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      com.sap.k8s.app: docker-registry
+  template:
+    metadata:
+      labels:
+        com.sap.k8s.app: docker-registry
+    spec:
+      containers:
+        - image: registry:2
+          imagePullPolicy: Always
+          name: docker-registry
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "500Mi"
+          volumeMounts:
+            - name: docker-registry-pvc-storage
+              mountPath: "/var/lib/registry"
+      volumes:
+        - name: docker-registry-pvc-storage
+          persistentVolumeClaim:
+            claimName: docker-registry-vol-pvc
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-registry-srv
+spec:
+  ports:
+    - name: web
+      port: 5000
+      targetPort: 5000
+  selector:
+    com.sap.k8s.app: docker-registry
+---
+# expose as external HTTPS endpoint, internal works with istio
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: docker-registry-route
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  rules:
+    - accessStrategies:
+        - config: {}
+          handler: allow
+      methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - HEAD
+      path: /.*
+  service:
+    host: docker-registry-private
+    name: docker-registry-srv # please remember this is 'SERVICE' resource name
+    port: 5000
